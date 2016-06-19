@@ -1,36 +1,33 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
 /**
  * Created by yoon on 2016. 5. 29..
  */
 
-public class Product {
+public class Album {
 
     // private variables
     public int _id;
-    public int _album_id;
     public String _name;
     public String _path;
-    public String _weight;
+    public String _plane;
 
-    public Product() {
+    public Album() {
     }
 
     // constructor
-    public Product(int id, int _album_id, String name, String _path, String _weight) {
+    public Album(int id, String name, String _path, String _plane) {
         this._id = id;
-        this._album_id = _album_id;
         this._name = name;
         this._path = _path;
-        this._weight = _weight;
+        this._plane = _plane;
     }
 
     // constructor
-    public Product(int _album_id, String name, String _path, String _weight) {
-        this._album_id = _album_id;
+    public Album(String name, String _path, String _plane) {
         this._name = name;
         this._path = _path;
-        this._weight = _weight;
+        this._plane = _plane;
     }
 
     // getting ID
@@ -42,17 +39,6 @@ public class Product {
     public void setID(int id) {
         this._id = id;
     }
-
-    // getting album id
-    public int getAlbumID() {
-        return this._album_id;
-    }
-
-    // setting album id
-    public void setAlbumID(int album_id) {
-        this._album_id = album_id;
-    }
-
 
     // getting name
     public String getName() {
@@ -74,14 +60,14 @@ public class Product {
         this._path = path;
     }
 
-    // getting weight
-    public String getWeight() {
-        return this._weight;
+    // getting plane
+    public String getPlane() {
+        return this._plane;
     }
 
-    // setting weight
-    public void setWeight(String weight) {
-        this._weight = weight;
+    // setting plane
+    public void setPlane(String plane) {
+        this._plane = plane;
     }
 
 }

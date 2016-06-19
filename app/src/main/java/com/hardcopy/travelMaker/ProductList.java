@@ -1,4 +1,4 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
 import android.app.Activity;
 import android.app.AlertDialog;

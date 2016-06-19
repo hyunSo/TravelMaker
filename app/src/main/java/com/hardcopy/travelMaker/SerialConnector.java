@@ -1,4 +1,4 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -12,9 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.hardcopy.arduinocontroller.Constants;
-import com.hardcopy.arduinocontroller.SerialCommand;
-import com.hardcopy.arduinocontroller.ArduinoControllerActivity.SerialListener;
+import com.hardcopy.travelMaker.ArduinoControllerActivity.SerialListener;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;

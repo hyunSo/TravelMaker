@@ -1,4 +1,4 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
 public class Constants {
 	public static final int MSG_DEVICE_COUNT = 1;

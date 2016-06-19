@@ -1,33 +1,29 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class AddUpdateProduct extends TravelActivity {
-    EditText add_name, add_weight;
+public class AddUpdateAlbum extends TravelActivity {
+    EditText add_name, add_plane;
     Button add_save_btn, add_view_all, update_btn, update_view_all;
     LinearLayout add_view, update_view;
-    String valid_weight = null, valid_name = null,
+    String valid_plane = null, valid_name = null,
             Toast_msg = null, valid_user_id = "";
-    int album_id;
-    String album_name;
-    int PRODUCT_ID;
-    ProductDatabaseHandler dbHandler = new ProductDatabaseHandler(this);
+    int ALBUM_ID;
+    AlbumDatabaseHandler dbHandler = new AlbumDatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_update_product);
+        setContentView(R.layout.activity_add_update_album);
 
         // set screen
         Set_Add_Update_Screen();
@@ -39,20 +35,19 @@ public class AddUpdateProduct extends TravelActivity {
             add_view.setVisibility(View.VISIBLE);
             update_view.setVisibility(View.GONE);
         } else {
+
             update_view.setVisibility(View.VISIBLE);
             add_view.setVisibility(View.GONE);
-            PRODUCT_ID = Integer.parseInt(getIntent().getStringExtra("PRODUCT_ID"));
+            ALBUM_ID = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
 
-            Product c = dbHandler.Get_Product(PRODUCT_ID);
+            Album c = dbHandler.Get_Album(ALBUM_ID);
 
             add_name.setText(c.getName());
-            add_weight.setText(c.getWeight());
+            add_plane.setText(c.getPlane());
             // dbHandler.close();
         }
-        album_id = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
-        album_name = getIntent().getStringExtra("ALBUM_NAME");
 
-        add_weight.addTextChangedListener(new TextWatcher() {
+        add_plane.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
@@ -71,7 +66,7 @@ public class AddUpdateProduct extends TravelActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                Is_Valid_Email(add_weight);
+                Is_Valid_Email(add_plane);
             }
         });
 
@@ -94,7 +89,7 @@ public class AddUpdateProduct extends TravelActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                Is_Valid_Product_Name(add_name);
+                Is_Valid_Album_Name(add_name);
             }
         });
 
@@ -105,11 +100,11 @@ public class AddUpdateProduct extends TravelActivity {
                 // TODO Auto-generated method stub
                 // check the value state is null or not
                 if (valid_name != null
-                        && valid_weight != null && valid_name.length() != 0
-                        && valid_weight.length() != 0) {
+                        && valid_plane != null && valid_name.length() != 0
+                        && valid_plane.length() != 0) {
 
-                    dbHandler.Add_Product(new Product(album_id, valid_name,
-                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight));
+                    dbHandler.Add_Album(new Album(valid_name,
+                            "/TravelMaker/"+valid_name, valid_plane));
                     Toast_msg = "Data inserted successfully";
                     Show_Toast(Toast_msg);
                     Reset_Text();
@@ -126,14 +121,15 @@ public class AddUpdateProduct extends TravelActivity {
                 // TODO Auto-generated method stub
 
                 valid_name = add_name.getText().toString();
-                valid_weight = add_weight.getText().toString();
+                valid_plane = add_plane.getText().toString();
+
                 // check the value state is null or not
                 if (valid_name != null
-                        && valid_weight != null && valid_name.length() != 0
-                        && valid_weight.length() != 0) {
+                        && valid_plane != null && valid_name.length() != 0
+                        && valid_plane.length() != 0) {
 
-                    dbHandler.Update_Product(new Product(PRODUCT_ID, album_id, valid_name,
-                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight));
+                    dbHandler.Update_Album(new Album(ALBUM_ID, valid_name,
+                            "/TravelMaker/"+valid_name, valid_plane));
                     dbHandler.close();
                     Toast_msg = "Data Update successfully";
                     Show_Toast(Toast_msg);
@@ -150,15 +146,11 @@ public class AddUpdateProduct extends TravelActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent view_product = new Intent(AddUpdateProduct.this,
-                        ProductList.class);
-                view_product.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                Intent view_user = new Intent(AddUpdateAlbum.this,
+                        AlbumList.class);
+                view_user.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                view_product.putExtra("ALBUM_ID", Integer.toString(album_id));
-                view_product.putExtra("ALBUM_NAME", album_name);
-
-                startActivity(view_product);
+                startActivity(view_user);
                 finish();
             }
         });
@@ -168,16 +160,11 @@ public class AddUpdateProduct extends TravelActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent view_product = new Intent(AddUpdateProduct.this,
-                        ProductList.class);
-                view_product.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                Intent view_user = new Intent(AddUpdateAlbum.this,
+                        AlbumList.class);
+                view_user.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Log.e("ALBUM_ID in product a/u", Integer.toString(album_id));
-
-                view_product.putExtra("ALBUM_ID", Integer.toString(album_id));
-                view_product.putExtra("ALBUM_NAME", album_name);
-                startActivity(view_product);
+                startActivity(view_user);
                 finish();
             }
         });
@@ -186,16 +173,16 @@ public class AddUpdateProduct extends TravelActivity {
 
     public void Set_Add_Update_Screen() {
 
-        add_name = (EditText) findViewById(R.id.product_add_name);
-        add_weight = (EditText) findViewById(R.id.product_add_weight);
+        add_name = (EditText) findViewById(R.id.album_add_name);
+        add_plane = (EditText) findViewById(R.id.album_add_plane);
 
-        add_save_btn = (Button) findViewById(R.id.product_add_save_btn);
-        update_btn = (Button) findViewById(R.id.product_update_btn);
-        add_view_all = (Button) findViewById(R.id.product_add_view_all);
-        update_view_all = (Button) findViewById(R.id.product_update_view_all);
+        add_save_btn = (Button) findViewById(R.id.album_add_save_btn);
+        update_btn = (Button) findViewById(R.id.album_update_btn);
+        add_view_all = (Button) findViewById(R.id.album_add_view_all);
+        update_view_all = (Button) findViewById(R.id.album_update_view_all);
 
-        add_view = (LinearLayout) findViewById(R.id.product_add_view);
-        update_view = (LinearLayout) findViewById(R.id.product_update_view);
+        add_view = (LinearLayout) findViewById(R.id.album_add_view);
+        update_view = (LinearLayout) findViewById(R.id.album_update_view);
 
         add_view.setVisibility(View.GONE);
         update_view.setVisibility(View.GONE);
@@ -205,17 +192,17 @@ public class AddUpdateProduct extends TravelActivity {
     public void Is_Valid_Email(EditText edt) {
 //        if (edt.getText().toString() == null) {
 //            edt.setError("Invalid Email Address");
-//            valid_weight = null;
+//            valid_plane = null;
 //        } else {
-            valid_weight = edt.getText().toString();
+            valid_plane = edt.getText().toString();
         //}
     }
 
-//    boolean isEmailValid(CharSequence weight) {
-//        return android.util.Patterns.EMAIL_ADDRESS.matcher(weight).matches();
-//    } // end of weight matcher
+//    boolean isEmailValid(CharSequence plane) {
+//        return android.util.Patterns.EMAIL_ADDRESS.matcher(plane).matches();
+//    } // end of plane matcher
 
-    public void Is_Valid_Product_Name(EditText edt) throws NumberFormatException {
+    public void Is_Valid_Album_Name(EditText edt) throws NumberFormatException {
         if (edt.getText().toString().length() < 3 || edt.getText().toString().length() > 15) {
             edt.setError("3-15자로 입력하세요.");
             valid_name = null;
@@ -232,7 +219,7 @@ public class AddUpdateProduct extends TravelActivity {
     public void Reset_Text() {
 
         add_name.getText().clear();
-        add_weight.getText().clear();
+        add_plane.getText().clear();
 
     }
 

@@ -1,10 +1,5 @@
-package com.hardcopy.arduinocontroller;
+package com.hardcopy.travelMaker;
 
-import com.hardcopy.arduinocontroller.R;
-import com.hardcopy.arduinocontroller.Constants;
-import com.hardcopy.arduinocontroller.SerialConnector;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -15,14 +10,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
