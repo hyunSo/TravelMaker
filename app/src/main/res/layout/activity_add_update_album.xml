@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.hardcopy.arduinocontroller.AddUpdateAlbum">
+    android:background="#FFFFFF"
+    tools:context="com.travelMaker.AddUpdateAlbum">
 
     <TextView
         android:layout_width="fill_parent"
@@ -27,7 +28,7 @@
 
         <requestFocus />
     </EditText>
-
+<!--
     <EditText
         android:id="@+id/album_add_plane"
         android:layout_width="match_parent"
@@ -36,6 +37,15 @@
         android:ems="10"
         android:hint="항공사정보"
         android:inputType="textEmailAddress" />
+-->
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/album_add_flight"
+        android:entries="@array/airlines"
+        android:prompt="@string/air_prompt" />
+
 
     <LinearLayout
         android:id="@+id/album_add_view"
@@ -51,11 +61,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
-            android:text="앨범 추가"
+            android:background="#33CCCC"
+            android:text="\n앨범 추가\n"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -64,10 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
-            android:text="앨범 목록"
+            android:background="#33CCCC"
+            android:text="\n앨범 목록\n"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
@@ -85,11 +93,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
-            android:text="수정완료"
+            android:background="#33CCCC"
+            android:text="\n수정 완료\n"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -98,10 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
-            android:text="물품 목록"
+            android:background="#33CCCC"
+            android:text="\n앨범 목록\n"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

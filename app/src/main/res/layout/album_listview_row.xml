@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
 <TextView
@@ -14,6 +15,8 @@
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:layout_marginTop="10dp"
     android:orientation="horizontal" >
 
     <LinearLayout
@@ -25,22 +28,28 @@
             android:id="@+id/album_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/album_path_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#999999" />
 
         <TextView
             android:id="@+id/album_plane_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#999999" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -73,7 +82,8 @@
                 android:layout_marginRight="5dp"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:text="삭제" />
+                android:text="삭제"
+                android:clickable="false" />
         </LinearLayout>
     </LinearLayout>
 

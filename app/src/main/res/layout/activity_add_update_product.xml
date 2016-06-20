@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.hardcopy.arduinocontroller.AddUpdateProduct">
+    android:background="#FFFFFF"
+    tools:context="com.travelMaker.AddUpdateProduct">
 
     <TextView
         android:layout_width="fill_parent"
@@ -54,7 +55,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="#33CCCC"
             android:text="물품 추가"
             android:textColor="#FFFFFF" />
 
@@ -66,7 +67,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="#33CCCC"
             android:text="물품 목록"
             android:textColor="#FFFFFF" />
     </LinearLayout>
@@ -88,7 +89,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="#33CCCC"
             android:text="수정완료"
             android:textColor="#FFFFFF" />
 
@@ -100,7 +101,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="#000000"
+            android:background="#33CCCC"
             android:text="물품 목록"
             android:textColor="#FFFFFF" />
     </LinearLayout>

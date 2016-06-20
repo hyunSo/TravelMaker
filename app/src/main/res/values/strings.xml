@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ArduinoController</string>
+    <string name="app_name">TravelMaker</string>
+    <string name="menu_name">네가 나를 잊(고가)지 못하게</string>
     <string name="hello_world">Hello world!</string>
-    
-    <string name="button1">Button1</string>
-    <string name="button2">Button2</string>
-    <string name="button3">Button3</string>
-    <string name="button4">Button4</string>
-    
+
     <string name="blank_msg">No data\n</string>
     <string name="title_activity_data">DataActivity</string>
     <string name="title_activity_add_update_album">AddUpdateAlbum</string>
@@ -16,5 +12,20 @@
     <string name="title_activity_add_update_product">AddUpdateProduct</string>
     <string name="title_activity_product_list">ProductList</string>
     <string name="title_activity_product_show">ProductShow</string>
+    <string name="air_prompt">항공사를 선택하세요</string>
+
+    <string-array name="airlines">
+        <item>--항공사--</item>
+        <item>아시아나항공</item>
+        <item>대한항공</item>
+        <item>제주항공</item>
+        <item>진에어</item>
+        <item>이스타항공</item>
+        <item>티웨이</item>
+        <item>에어부산</item>
+        <item>에어아시아</item>
+        <item>델타항공</item>
+        <item>티웨이항공</item>
+    </string-array>
 
 </resources>

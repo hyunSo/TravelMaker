@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hardcopy.arduinocontroller"
+    package="com.travelMaker"
     android:versionCode="2"
     android:versionName="1.0.2" >
 
@@ -16,9 +16,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.NoTitleBar">
+        <!--android:theme="@style/AppTheme" -->
         <activity
-            android:name=".AlbumList"
+            android:name="com.travelMaker.AlbumList"
             android:label="@string/title_activity_album_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ArduinoControllerActivity"
+            android:name="com.travelMaker.ArduinoControllerActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
@@ -37,24 +38,24 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
+        <!--    <activity
+                    android:name=".CameraActivity"
+                    android:label="@string/app_name" >
+                </activity>
+        -->     <activity
+        android:name="com.travelMaker.AddUpdateAlbum"
+        android:label="@string/title_activity_add_update_album" >
+    </activity>
         <activity
-            android:name=".CameraActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".AddUpdateAlbum"
-            android:label="@string/title_activity_add_update_album" >
-        </activity>
-        <activity
-            android:name=".ProductList"
+            android:name="com.travelMaker.ProductList"
             android:label="@string/title_activity_product_list" >
         </activity>
         <activity
-            android:name=".AddUpdateProduct"
+            android:name="com.travelMaker.AddUpdateProduct"
             android:label="@string/title_activity_add_update_product" >
         </activity>
         <activity
-            android:name=".ProductShow"
+            android:name="com.travelMaker.ProductShow"
             android:label="@string/title_activity_product_show" >
         </activity>
     </application>

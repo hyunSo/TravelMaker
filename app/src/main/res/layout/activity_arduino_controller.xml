@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ArduinoControllerActivity" >
+	android:background="#FFFFFF"
+	tools:context=".ArduinoControllerActivity" >
 
     <LinearLayout
         android:id="@+id/linear_info"
@@ -21,62 +22,25 @@
 	         />
     </LinearLayout>
 
-    <com.hardcopy.arduinocontroller.MyCameraSurface
+    <com.travelMaker.MyCameraSurface
         android:id="@+id/previewFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_weight="10"
-        />
-
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button1" />
     <LinearLayout
         android:id="@+id/album_layout"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="horizontal"
         >
-        <Button
-            android:id="@+id/product_btn"
-            android:layout_width="0dip"
-            android:layout_height="50dip"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:text="돌아가기" />
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/linear_button"
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button 
-            android:id="@+id/button_send1"
-            android:layout_width="0dip"
-            android:layout_height="50dip"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:text="@string/button1" />
-        <Button 
-            android:id="@+id/button_send2"
-            android:layout_width="0dip"
-            android:layout_height="50dip"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:text="@string/button2" />
-        <Button 
-            android:id="@+id/button_send3"
-            android:layout_width="0dip"
-            android:layout_height="50dip"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:text="@string/button3" />
-        <Button 
-            android:id="@+id/button_send4"
-            android:layout_width="0dip"
-            android:layout_height="50dip"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:text="@string/button4" />
-    </LinearLayout>
-    
+		<!--
+                <Button
+                    android:id="@+id/product_btn"
+                    android:layout_width="0dip"
+                    android:layout_height="50dip"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:text="돌아가기" />
+        -->
+	</LinearLayout>
 </LinearLayout>
