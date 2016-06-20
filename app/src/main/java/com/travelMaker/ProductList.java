@@ -23,14 +23,18 @@ public class ProductList extends TravelActivity {
     Button add_btn;
     Button goto_album_list;
     TextView album_name_txt;
+    TextView album_weight_txt;
     ListView Product_listview;
     ArrayList<Product> product_data = new ArrayList<Product>();
     Product_Adapter cAdapter;
     ProductDatabaseHandler db;
+    AlbumDatabaseHandler AlbumdbHandler = new AlbumDatabaseHandler(this);
     String Toast_msg;
 
     static int ALBUM_ID;
     static String album_name;
+    static Album c;
+
     ProductDatabaseHandler dbHandler = new ProductDatabaseHandler(this);
 
     @Override
@@ -43,9 +47,11 @@ public class ProductList extends TravelActivity {
             add_btn = (Button) findViewById(R.id.product_add_btn);
             goto_album_list = (Button) findViewById(R.id.product_goto_album_list);
             album_name_txt = (TextView) findViewById(R.id.product_album_name);
+            album_weight_txt = (TextView) findViewById(R.id.textWeight);
 
             ALBUM_ID = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
             album_name = getIntent().getStringExtra("ALBUM_NAME");
+            c = AlbumdbHandler.Get_Album(ALBUM_ID);
 
             Log.e("ALBUM ID", Integer.toString(ALBUM_ID));
 
@@ -125,6 +131,7 @@ public class ProductList extends TravelActivity {
 
         // update album name
         album_name_txt.setText(album_name);
+        album_weight_txt.setText(c.get_currWeight() + "kg (maximum " + c.get_maxWeight() + "kg)");
     }
 
     public void Show_Toast(String msg) {

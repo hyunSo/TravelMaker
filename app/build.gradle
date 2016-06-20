@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.hardcopy.arduinocontroller"
+        applicationId "com.travelMaker"
         minSdkVersion 18
         targetSdkVersion 23
     }

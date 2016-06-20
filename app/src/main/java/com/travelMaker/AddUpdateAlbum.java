@@ -21,7 +21,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
     Button add_save_btn, add_view_all, update_btn, update_view_all;
     LinearLayout add_view, update_view;
     String valid_plane = null, valid_name = null,
-            Toast_msg = null, valid_user_id = "";//, valid_flight = null;
+            Toast_msg = null, valid_user_id = "", currentWeight = "";//, valid_flight = null;
     int ALBUM_ID;
     int flight_id = -1;
     AlbumDatabaseHandler dbHandler = new AlbumDatabaseHandler(this);
@@ -50,6 +50,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
             Album c = dbHandler.Get_Album(ALBUM_ID);
 
             add_name.setText(c.getName());
+            currentWeight = c.get_currWeight();
 //            add_plane.setText(c.getPlane());
             // dbHandler.close();
         }
@@ -101,8 +102,9 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                         && valid_plane != null && valid_name.length() != 0
                         && valid_plane.length() != 0) {
 
+                    //TODO change 32 into exact value
                     dbHandler.Add_Album(new Album(valid_name,
-                            "/TravelMaker/"+valid_name, valid_plane));
+                            "/TravelMaker/"+valid_name, valid_plane, new String("32")));
                     Toast_msg = "Data inserted successfully";
                     Show_Toast(Toast_msg);
                     Reset_Text();
@@ -132,8 +134,12 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                         && valid_plane != null && valid_name.length() != 0
                         && valid_plane.length() != 0) {
 
+                    Album c = dbHandler.Get_Album(ALBUM_ID);
+                    currentWeight = c.get_currWeight();
+
+                    //TODO change 32 into exact value
                     dbHandler.Update_Album(new Album(ALBUM_ID, valid_name,
-                            "/TravelMaker/"+valid_name, valid_plane));
+                            "/TravelMaker/"+valid_name, valid_plane, new String("32"), currentWeight));
                     dbHandler.close();
                     Toast_msg = "Data Updated successfully";
                     Show_Toast(Toast_msg);

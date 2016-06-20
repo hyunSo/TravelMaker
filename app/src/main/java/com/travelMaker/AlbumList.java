@@ -76,11 +76,15 @@ public class AlbumList extends TravelActivity {
             String name = album_array_from_db.get(i).getName();
             String mobile = album_array_from_db.get(i).getPath();
             String plane = album_array_from_db.get(i).getPlane();
+            String maxWeight = album_array_from_db.get(i).get_maxWeight();
+            String currWeight = album_array_from_db.get(i).get_currWeight();
             Album cnt = new Album();
             cnt.setID(tidno);
             cnt.setName(name);
             cnt.setPlane(plane);
             cnt.setPath(mobile);
+            cnt.set_maxWeight(maxWeight);
+            cnt.set_currWeight(currWeight);
 
             album_data.add(cnt);
         }
@@ -131,6 +135,7 @@ public class AlbumList extends TravelActivity {
                 holder.name = (TextView) row.findViewById(R.id.album_name_txt);
                 holder.plane = (TextView) row.findViewById(R.id.album_plane_txt);
                 holder.path = (TextView) row.findViewById(R.id.album_path_txt);
+                holder.weight = (TextView) row.findViewById(R.id.current_weight_txt);
                 holder.show = (Button) row.findViewById(R.id.album_btn_show);
                 holder.edit = (Button) row.findViewById(R.id.album_btn_update);
                 holder.delete = (Button) row.findViewById(R.id.album_btn_delete);
@@ -145,6 +150,7 @@ public class AlbumList extends TravelActivity {
             holder.name.setText(album.getName());
             holder.plane.setText(album.getPlane());
             holder.path.setText(album.getPath());
+            holder.weight.setText(album.get_currWeight() + "kg (maximum " + album.get_maxWeight() + "kg)");
 
             holder.show.setOnClickListener(new OnClickListener() {
 
@@ -218,6 +224,7 @@ public class AlbumList extends TravelActivity {
             TextView name;
             TextView plane;
             TextView path;
+            TextView weight;
             Button show;
             Button edit;
             Button delete;

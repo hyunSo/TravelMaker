@@ -40,7 +40,6 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	// About Camera
 	MyCameraSurface mSurface;
 	String mRootPath;
-
 	String Toast_msg = null;
 
 	int album_id;
@@ -50,7 +49,9 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 
 	int PRODUCT_ID;
 	ProductDatabaseHandler dbHandler = new ProductDatabaseHandler(this);
-
+	AlbumDatabaseHandler AlbumdbHandler = new AlbumDatabaseHandler(this);
+	Album c;
+	Button temp;
 
 	private int tmp;
 	@Override
@@ -62,15 +63,19 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 
 		// Layouts
 		setContentView(R.layout.activity_arduino_controller);
-
+/*
 		mTextInfo = (TextView) findViewById(R.id.text_info);
 		mTextInfo.setMovementMethod(new ScrollingMovementMethod());
-/*
+*/
 		mProductList = (Button) findViewById(R.id.product_btn);
 		mProductList.setOnClickListener(this);
-*/
+
 		album_id = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
 		album_name = getIntent().getStringExtra("ALBUM_NAME");
+		c = AlbumdbHandler.Get_Album(album_id);
+
+		temp = (Button) findViewById(R.id.button);
+		temp.setOnClickListener(this);
 
 		// Initialize
 		mListener = new SerialListener();
@@ -112,13 +117,25 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
-/*		case R.id.product_btn:
-			Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
-			i.putExtra("ALBUM_ID", album_id);
-			i.putExtra("ALBUM_NAME", album_name);
-			startActivity(i);
-*/		default:
-			break;
+			case R.id.button:
+				weight_flag = true;
+				camera_flag = true;
+				weight = new String("3.33");
+				name = new String("tempName");
+				path = new String("tempPath");
+				checkAndSave();
+				break;
+			case R.id.product_btn:
+				Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
+				i.putExtra("ALBUM_ID", Integer.toString(album_id));
+				i.putExtra("ALBUM_NAME", album_name);
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(i);
+				finish();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -209,6 +226,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 
 			dbHandler.Add_Product(new Product(album_id, name,
 					path, weight));
+			AlbumdbHandler.Update_Album_Weight(c, weight);
+			dbHandler.close();
 			Toast_msg = "물품이 저장되었습니다";
 			Show_Toast(Toast_msg);
 		}
@@ -256,7 +275,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		File fRoot = new File(mRootPath);
 		if (fRoot.exists() == false) {
 			if (fRoot.mkdir() == false) {
-				Toast.makeText(this, "사진을 저장할 폴더가 없습니다.", 1).show();
+//				Toast.makeText(this, "사진을 저장할 폴더가 없습니다.", 1).show();
 				//finish();
 				return;
 			}
@@ -295,7 +314,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 			fos.flush();
 			fos.close();
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "file error", 1).show();
+//			Toast.makeText(getApplicationContext(), "file error", 1).show();
 			return;
 		}
 		//파일을 갤러리에 저장

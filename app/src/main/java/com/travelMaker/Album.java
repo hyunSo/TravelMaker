@@ -11,23 +11,48 @@ public class Album {
     public String _name;
     public String _path;
     public String _plane;
+    public String _maxWeight;
+    public String _currWeight;
 
     public Album() {
     }
 
     // constructor
-    public Album(int id, String name, String _path, String _plane) {
+    public Album(int id, String name, String _path, String _plane, String _maxWeight) {
         this._id = id;
         this._name = name;
         this._path = _path;
         this._plane = _plane;
+        this._maxWeight = _maxWeight;
+        this._currWeight = new String("0");
     }
 
     // constructor
-    public Album(String name, String _path, String _plane) {
+    public Album(String name, String _path, String _plane, String _maxWeight) {
         this._name = name;
         this._path = _path;
         this._plane = _plane;
+        this._maxWeight = _maxWeight;
+        this._currWeight = new String("0");
+    }
+
+    // constructor
+    public Album(int id, String name, String _path, String _plane, String _maxWeight, String _currWeight) {
+        this._id = id;
+        this._name = name;
+        this._path = _path;
+        this._plane = _plane;
+        this._maxWeight = _maxWeight;
+        this._currWeight = _currWeight;
+    }
+
+    // constructor
+    public Album(String name, String _path, String _plane, String _maxWeight, String _currWeight) {
+        this._name = name;
+        this._path = _path;
+        this._plane = _plane;
+        this._maxWeight = _maxWeight;
+        this._currWeight = _currWeight;
     }
 
     // getting ID
@@ -70,4 +95,19 @@ public class Album {
         this._plane = plane;
     }
 
+    public String get_maxWeight() {
+        return _maxWeight;
+    }
+
+    public void set_maxWeight(String _maxWeight) {
+        this._maxWeight = _maxWeight;
+    }
+
+    public String get_currWeight() {
+        return _currWeight;
+    }
+
+    public void set_currWeight(String _currWeight) {
+        this._currWeight = _currWeight;
+    }
 }

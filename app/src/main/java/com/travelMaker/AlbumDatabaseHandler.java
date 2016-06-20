@@ -26,12 +26,13 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_ALBUMS = "albums";
     private static final String TABLE_PRODUCTS = "products";
 
-
     // Albums Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_PH_NO = "phone_number";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_LIMIT = "maxWeight";
+    private static final String KEY_WEIGHT = "currWeight";
     private final ArrayList<Album> album_list = new ArrayList<Album>();
 
     ProductDatabaseHandler p_db;
@@ -47,7 +48,8 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ALBUMS_TABLE = "CREATE TABLE " + TABLE_ALBUMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT," + KEY_EMAIL + " TEXT" + ")";
+                + KEY_PH_NO + " TEXT," + KEY_EMAIL + " TEXT,"
+                + KEY_LIMIT + " TEXT," + KEY_WEIGHT + " TEXT" + ")";
         db.execSQL(CREATE_ALBUMS_TABLE);
     }
 
@@ -72,6 +74,8 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, album.getName()); // Album Name
         values.put(KEY_PH_NO, album.getPath()); // Album Phone
         values.put(KEY_EMAIL, album.getPlane()); // Album Email
+        values.put(KEY_LIMIT, album.get_maxWeight()); // Album Email
+        values.put(KEY_WEIGHT, album.get_currWeight()); // Album Email
         // Inserting Row
         db.insert(TABLE_ALBUMS, null, values);
         db.close(); // Closing database connection
@@ -82,13 +86,13 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_ALBUMS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PH_NO, KEY_EMAIL }, KEY_ID + "=?",
+                        KEY_NAME, KEY_PH_NO, KEY_EMAIL, KEY_LIMIT, KEY_WEIGHT }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Album album = new Album(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
         // return album
         cursor.close();
         db.close();
@@ -115,6 +119,8 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
                     album.setName(cursor.getString(1));
                     album.setPath(cursor.getString(2));
                     album.setPlane(cursor.getString(3));
+                    album.set_maxWeight(cursor.getString(4));
+                    album.set_currWeight(cursor.getString(5));
                     // Adding album to list
                     album_list.add(album);
                 } while (cursor.moveToNext());
@@ -140,11 +146,31 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, album.getName());
         values.put(KEY_PH_NO, album.getPath());
         values.put(KEY_EMAIL, album.getPlane());
+        values.put(KEY_LIMIT, album.get_maxWeight());
+        values.put(KEY_WEIGHT, album.get_currWeight());
 
         // updating row
         return db.update(TABLE_ALBUMS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(album.getID()) });
     }
+
+    public int Update_Album_Weight(Album album, String weight) {
+        double updateWeight = Double.parseDouble(album.get_currWeight()) + Double.parseDouble(weight);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, album.getName());
+        values.put(KEY_PH_NO, album.getPath());
+        values.put(KEY_EMAIL, album.getPlane());
+        values.put(KEY_LIMIT, album.get_maxWeight());
+        values.put(KEY_WEIGHT, updateWeight);
+        album.set_currWeight(Double.toString(updateWeight));
+
+        // updating row
+        return db.update(TABLE_ALBUMS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(album.getID()) });
+    }
+
 
     // Deleting single album
     public void Delete_Album(int id) {

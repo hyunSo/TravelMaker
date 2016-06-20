@@ -6,41 +6,32 @@
 	android:background="#FFFFFF"
 	tools:context=".ArduinoControllerActivity" >
 
-    <LinearLayout
-        android:id="@+id/linear_info"
-        android:layout_width="fill_parent" 
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:background="#efefef">
-	    <TextView
-	        android:id="@+id/text_info"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:gravity="center|center_vertical"
-	        android:textSize="32sp"
-	        android:text="@string/blank_msg"
-	         />
-    </LinearLayout>
-
-    <com.travelMaker.MyCameraSurface
+	<com.travelMaker.MyCameraSurface
         android:id="@+id/previewFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="472dp"
         android:layout_below="@+id/button1" />
-    <LinearLayout
+
+	<LinearLayout
         android:id="@+id/album_layout"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:orientation="horizontal"
         >
-		<!--
-                <Button
-                    android:id="@+id/product_btn"
-                    android:layout_width="0dip"
-                    android:layout_height="50dip"
-                    android:layout_weight="1"
-                    android:textSize="14sp"
-                    android:text="돌아가기" />
-        -->
+
+		<Button
+			android:id="@+id/product_btn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:text="돌아가기" />
+
 	</LinearLayout>
+
+	<Button
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="TEMP"
+android:id="@+id/button" />
+
 </LinearLayout>
