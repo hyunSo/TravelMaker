@@ -180,7 +180,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		@Override
 		public void handleMessage(Message msg) {
 
-			Show_Toast((String)msg.obj);
+//			Show_Toast((String)msg.obj);
 			switch(msg.what) {
 			case Constants.MSG_DEVICD_INFO:
 				//mTextLog.append((String)msg.obj+"a1");
@@ -190,27 +190,23 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				break;
 			case Constants.MSG_READ_DATA_COUNT:
 				String con = (String)msg.obj;
+				Show_Toast((String)msg.obj);
 				//mTextLog.append(con + "\n");
 				if(con.charAt(0)!='a') { //사진촬영
 					readyCamera();
 				}
 				else { //무게와따
 					con = con.substring(1);
-					mTextInfo.setText(con);
-					//mTextLog.append("무게 : "+con);
-					//mTextLog.append("\n");
-					weight_flag = true;
 
 					weight = con;
-					//Show_Toast("무게왔다");
+//					Show_Toast(weight);
+					weight_flag = true;
 					checkAndSave();
 				}
 				break;
 			case Constants.MSG_READ_DATA:
 				if(msg.obj != null) {
 					mTextInfo.setText((String)msg.obj);
-					//mTextLog.append((String) msg.obj+"a3");
-					//mTextLog.append("\n");
 				}
 				break;
 			case Constants.MSG_SERIAL_ERROR:
