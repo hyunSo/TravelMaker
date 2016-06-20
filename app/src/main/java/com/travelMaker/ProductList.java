@@ -239,11 +239,11 @@ public class ProductList extends TravelActivity {
                     // show a message while loader is loading
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-                    adb.setTitle("Delete?");
-                    adb.setMessage("Are you sure you want to delete ");
+                    adb.setTitle("제거");
+                    adb.setMessage("물품을 리스트에서 제거하시겠습니까?");
                     final int user_id = Integer.parseInt(v.getTag().toString());
-                    adb.setNegativeButton("Cancel", null);
-                    adb.setPositiveButton("Ok",
+                    adb.setNegativeButton("취소", null);
+                    adb.setPositiveButton("네",
                             new AlertDialog.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
@@ -251,6 +251,9 @@ public class ProductList extends TravelActivity {
                                     // MyDataObject.remove(positionToRemove);
                                     ProductDatabaseHandler dBHandler = new ProductDatabaseHandler(
                                             activity.getApplicationContext());
+                                    Product tmp = dBHandler.Get_Product(user_id);
+                                    AlbumdbHandler.Update_Album_Weight(c, "-" + tmp.getWeight());
+                                    AlbumdbHandler.close();
                                     dBHandler.Delete_Product(user_id);
                                     ProductList.this.onResume();
 

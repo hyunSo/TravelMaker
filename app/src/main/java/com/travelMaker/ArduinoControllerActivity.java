@@ -1,6 +1,8 @@
 package com.travelMaker;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -8,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.SurfaceHolder;
@@ -37,6 +38,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	private TextView mTextInfo = null;
 	private Button mProductList;
 
+	private View V;
+
 	// About Camera
 	MyCameraSurface mSurface;
 	String mRootPath;
@@ -63,6 +66,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 
 		// Layouts
 		setContentView(R.layout.activity_arduino_controller);
+		V = getWindow().getDecorView().getRootView();
 /*
 		mTextInfo = (TextView) findViewById(R.id.text_info);
 		mTextInfo.setMovementMethod(new ScrollingMovementMethod());
@@ -253,6 +257,27 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	public void checkAndSave() {
 		if( camera_flag && weight_flag ) {
 			saveProduct();
+			if (Double.parseDouble(c.get_currWeight()) >= Double.parseDouble(c.get_maxWeight())){
+				AlertDialog.Builder adb = new AlertDialog.Builder(this);
+				adb.setTitle("무게 제한 초과");
+				adb.setMessage("무게 제한이 초과되었습니다.\n물품 목록으로 돌아가시겠습니까?");
+				adb.setNegativeButton("취소", null);
+				adb.setPositiveButton("네",
+						new AlertDialog.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+												int which) {
+								Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
+								i.putExtra("ALBUM_ID", Integer.toString(album_id));
+								i.putExtra("ALBUM_NAME", album_name);
+								i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+										| Intent.FLAG_ACTIVITY_NEW_TASK);
+								startActivity(i);
+								finish();
+							}
+						});
+				adb.show();
+			}
 			camera_flag = false; weight_flag = false;
 		}
 	}

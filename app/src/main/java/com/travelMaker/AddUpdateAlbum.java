@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItemSelectedListener{

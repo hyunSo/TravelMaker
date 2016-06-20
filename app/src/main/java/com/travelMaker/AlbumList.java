@@ -1,7 +1,5 @@
 package com.travelMaker;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +15,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class AlbumList extends TravelActivity {
     Button add_btn;
@@ -195,11 +195,11 @@ public class AlbumList extends TravelActivity {
                     // show a message while loader is loading
 
                     AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-                    adb.setTitle("Delete?");
-                    adb.setMessage("Are you sure you want to delete ");
+                    adb.setTitle("삭제");
+                    adb.setMessage("앨범을 리스트에서 제거하시겠습니까?");
                     final int user_id = Integer.parseInt(v.getTag().toString());
-                    adb.setNegativeButton("Cancel", null);
-                    adb.setPositiveButton("Ok",
+                    adb.setNegativeButton("취소", null);
+                    adb.setPositiveButton("네",
                             new AlertDialog.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog,
