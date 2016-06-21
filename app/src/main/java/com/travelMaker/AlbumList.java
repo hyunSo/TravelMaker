@@ -75,13 +75,11 @@ public class AlbumList extends TravelActivity {
             int tidno = album_array_from_db.get(i).getID();
             String name = album_array_from_db.get(i).getName();
             String mobile = album_array_from_db.get(i).getPath();
-            String plane = album_array_from_db.get(i).getPlane();
             String maxWeight = album_array_from_db.get(i).get_maxWeight();
             String currWeight = album_array_from_db.get(i).get_currWeight();
             Album cnt = new Album();
             cnt.setID(tidno);
             cnt.setName(name);
-            cnt.setPlane(plane);
             cnt.setPath(mobile);
             cnt.set_maxWeight(maxWeight);
             cnt.set_currWeight(currWeight);
@@ -148,7 +146,6 @@ public class AlbumList extends TravelActivity {
             holder.edit.setTag(album.getID());
             holder.delete.setTag(album.getID());
             holder.name.setText(album.getName());
-            holder.plane.setText(album.getPlane());
             holder.path.setText(album.getPath());
             holder.weight.setText(album.get_currWeight() + "kg (maximum " + album.get_maxWeight() + "kg)");
 
@@ -161,11 +158,11 @@ public class AlbumList extends TravelActivity {
 
                     Intent show_album = new Intent(activity,
                             ProductList.class);
-                    String album_id = v.getTag().toString();
-                    String album_name = db.Get_Album(Integer.parseInt(album_id)).getName();
+                    int album_id = Integer.parseInt(v.getTag().toString());
+                    String album_name = db.Get_Album(album_id).getName();
 
-                    show_album.putExtra("ALBUM_ID", album_id);
-                    show_album.putExtra("ALBUM_NAME", album_name);
+                    DataCenter.setAlbumId(album_id);
+                    DataCenter.setAlbumName(album_name);
 
                     activity.startActivity(show_album);
                 }
@@ -181,7 +178,7 @@ public class AlbumList extends TravelActivity {
                     Intent update_user = new Intent(activity,
                             AddUpdateAlbum.class);
                     update_user.putExtra("called", "update");
-                    update_user.putExtra("ALBUM_ID", v.getTag().toString());
+                    DataCenter.setAlbumId(Integer.parseInt(v.getTag().toString()));
                     activity.startActivity(update_user);
 
                 }

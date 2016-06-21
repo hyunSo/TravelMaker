@@ -1,17 +1,29 @@
 package com.travelMaker;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VerticalSeekBar_Reverse;
+import android.widget.constants;
+
+import java.util.ArrayList;
 
 public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItemSelectedListener{
     EditText add_name;//, add_plane;
@@ -20,15 +32,36 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
     LinearLayout add_view, update_view;
     String valid_plane = null, valid_name = null,
             Toast_msg = null, valid_user_id = "", currentWeight = "";//, valid_flight = null;
+    String valid_weight = "";
     int ALBUM_ID;
     int flight_id = -1;
+    ArrayList<plane> plane_data1,plane_data2, plane_data3;
+    plane_Adapter cAdapter;
     AlbumDatabaseHandler dbHandler = new AlbumDatabaseHandler(this);
+
+    VerticalSeekBar_Reverse verticalSeekBar_Reverse=null;
+    TextView vs_reverseProgress=null;
+
+    ListView planeListView1;
+    ListView planeListView2;
+    ListView planeListView3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_update_album);
+
+        final int max = 40;
+        final int min = 10;
+
+        verticalSeekBar_Reverse=(VerticalSeekBar_Reverse)findViewById(R.id.seekbar_reverse);
+        vs_reverseProgress=(TextView)findViewById(R.id.reverse_sb_progresstext);
+        planeListView1 = (ListView) findViewById(R.id.lv1);
+        planeListView2 = (ListView) findViewById(R.id.lv2);
+        planeListView3 = (ListView) findViewById(R.id.lv3);
+        add_flight = (Spinner) findViewById(R.id.album_add_flight);
 
         // set screen
         Set_Add_Update_Screen();
@@ -43,7 +76,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
 
             update_view.setVisibility(View.VISIBLE);
             add_view.setVisibility(View.GONE);
-            ALBUM_ID = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
+            ALBUM_ID = DataCenter.getAlbumId();
 
             Album c = dbHandler.Get_Album(ALBUM_ID);
 
@@ -76,6 +109,72 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
             }
         });
 */
+
+        //ArrayAdapter<String> sAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, constants.PLANES);
+
+        plane_data1 = new ArrayList<plane>();
+        plane_data2 = new ArrayList<plane>();
+        plane_data3 = new ArrayList<plane>();
+        for(int i = 0;i< constants.PLANES.length;i++) {
+            plane p = new plane();
+            p._details = constants.PLANES[i];
+            if(i<8) plane_data1.add(p);
+            else if(i<14) plane_data2.add(p);
+            else plane_data3.add(p);
+        }
+        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data1);
+        planeListView1.setAdapter(cAdapter);
+        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data2);
+        planeListView2.setAdapter(cAdapter);
+        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data3);
+        planeListView3.setAdapter(cAdapter);
+
+        cAdapter.notifyDataSetChanged();
+
+        //   verticalSeekBar_Reverse.setMax( (max - min) / step );
+        verticalSeekBar_Reverse.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                double value = min + (progress*(max-min)/100);
+                vs_reverseProgress.setText(value+" kg");
+                valid_weight = Double.toString(value);
+                int c1, c2, c3;
+                if(value<16) {
+                    c1 = Color.WHITE;
+                    c2 = c3 = Color.GRAY;
+                }
+                else if(value<30)
+                {
+                    c2 = Color.WHITE;
+                    c1 = c3 = Color.GRAY;
+                }
+                else
+                {
+                    c3 = Color.WHITE;
+                    c1 = c2 = Color.GRAY;
+                }
+                planeListView1.setBackgroundColor(c1);
+                planeListView2.setBackgroundColor(c2);
+                planeListView3.setBackgroundColor(c3);
+
+            }
+        });
+
+
         add_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -97,13 +196,13 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                 // TODO Auto-generated method stub
                 // check the value state is null or not
                 if (valid_name != null && flight_id >= 0
-                        && valid_plane != null && valid_name.length() != 0
-                        && valid_plane.length() != 0) {
+                        && valid_name.length() != 0
+                        && valid_weight.length() != 0 ) {
 
                     //TODO change 32 into exact value
                     dbHandler.Add_Album(new Album(valid_name,
-                            "/TravelMaker/"+valid_name, valid_plane, new String("32")));
-                    Toast_msg = "Data inserted successfully";
+                            "/TravelMaker/"+valid_name, valid_weight));
+                    Toast_msg = "Data inserted successfully"+valid_weight;
                     Show_Toast(Toast_msg);
                     Reset_Text();
 
@@ -129,17 +228,16 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
 
                 // check the value state is null or not
                 if (valid_name != null && flight_id >= 0
-                        && valid_plane != null && valid_name.length() != 0
-                        && valid_plane.length() != 0) {
+                        && valid_weight.length() != 0 && valid_name.length() != 0) {
 
                     Album c = dbHandler.Get_Album(ALBUM_ID);
                     currentWeight = c.get_currWeight();
 
                     //TODO change 32 into exact value
                     dbHandler.Update_Album(new Album(ALBUM_ID, valid_name,
-                            "/TravelMaker/"+valid_name, valid_plane, new String("32"), currentWeight));
+                            "/TravelMaker/"+valid_name, valid_weight, currentWeight));
                     dbHandler.close();
-                    Toast_msg = "Data Updated successfully";
+                    Toast_msg = "Data Updated successfully"+valid_weight;
                     Show_Toast(Toast_msg);
                     Reset_Text();
 
@@ -192,7 +290,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
         // parent.getItemAtPosition(pos)
         //
         flight_id = position;
-        switch (position) {
+        /*switch (position) {
             case 0:
                 valid_plane = null;
                 break;
@@ -241,7 +339,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                 flight_id = -1;
                 Toast.makeText(parent.getContext(), "Something is wrong", Toast.LENGTH_SHORT).show();
                 break;
-        }
+        }*/
     }
 
     public  void  onNothingSelected(AdapterView<?> parent) {
@@ -289,4 +387,58 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
  //       add_plane.getText().clear();
     }
 
+    public class plane_Adapter extends ArrayAdapter<plane> {
+        //  Activity activity;
+        // int layoutResourceId;
+        // plane plane;
+        ArrayList<plane> data = new ArrayList<plane>();
+
+        public plane_Adapter(Activity act, int layoutResourceId,
+                             ArrayList<plane> data) {
+            super(act, layoutResourceId, data);
+            //   this.layoutResourceId = layoutResourceId;
+            //  this.activity = act;
+            this.data = data;
+            // notifyDataSetChanged();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            // UserHolder holder = null;
+
+            if (row == null) {
+                //  LayoutInflater inflater = LayoutInflater.from(activity);
+                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = vi.inflate(R.layout.plane_listview_row, null);
+                // row = inflater.inflate(layoutResourceId, parent, false);
+                // holder = new UserHolder();
+                //holder.planedetails = (TextView) row.findViewById(R.id.planeDetail_tv);
+                //row.setTag(holder);
+            } else {
+                //holder = (UserHolder) row.getTag();
+            }
+            plane p = data.get(position);
+            if(p!=null)
+            {
+                TextView tt = (TextView) row.findViewById(R.id.planeDetail_tv);
+                if(tt != null)
+                {
+                    tt.setText(p.getDet());
+                }
+            }
+            //    plane = data.get(position);
+            //   holder.planedetails.setTag(plane.getDet());
+           /* holder.show.setTag(product.getID());
+            holder.edit.setTag(product.getID());
+            holder.delete.setTag(product.getID());
+            holder.name.setText(product.getName());
+            holder.weight.setText(product.getWeight());
+            holder.path.setText(product.getPath());*/
+
+
+            return row;
+
+        }
+    }
 }

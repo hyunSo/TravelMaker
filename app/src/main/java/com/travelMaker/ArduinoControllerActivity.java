@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.SurfaceHolder;
@@ -37,6 +41,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	private TextView mTextLog = null;
 	private TextView mTextInfo = null;
 	private Button mProductList;
+
+	private MediaPlayer player = null;
 
 	private View V;
 
@@ -74,8 +80,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		mProductList = (Button) findViewById(R.id.product_btn);
 		mProductList.setOnClickListener(this);
 
-		album_id = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
-		album_name = getIntent().getStringExtra("ALBUM_NAME");
+		album_id = DataCenter.getAlbumId();
+		album_name = DataCenter.getAlbumName();
 		c = AlbumdbHandler.Get_Album(album_id);
 
 		temp = (Button) findViewById(R.id.button);
@@ -131,8 +137,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				break;
 			case R.id.product_btn:
 				Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
-				i.putExtra("ALBUM_ID", Integer.toString(album_id));
-				i.putExtra("ALBUM_NAME", album_name);
+				DataCenter.setAlbumId(album_id);
+				DataCenter.setAlbumName(album_name);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 						| Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(i);
@@ -242,6 +248,16 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 
 	}
 
+	@Override
+	public void onStop () {
+		super.onStop();
+		if (player != null && player.isPlaying()) {
+			player.stop();
+			player.release();
+			player = null;
+		}
+	}
+
 
 
 	public void Show_Toast(String msg) {
@@ -257,21 +273,63 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				AlertDialog.Builder adb = new AlertDialog.Builder(this);
 				adb.setTitle("무게 제한 초과");
 				adb.setMessage("무게 제한이 초과되었습니다.\n물품 목록으로 돌아가시겠습니까?");
-				adb.setNegativeButton("취소", null);
+				adb.setNegativeButton("취소", new AlertDialog.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog,
+					int which){
+						if (player != null && player.isPlaying()) {
+							player.stop();
+							player.release();
+							player = null;
+						}
+					}
+				});
 				adb.setPositiveButton("네",
 						new AlertDialog.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog,
 												int which) {
+								if(player != null && player.isPlaying()){
+									player.stop();
+									player.release();
+									player = null;
+								}
 								Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
-								i.putExtra("ALBUM_ID", Integer.toString(album_id));
-								i.putExtra("ALBUM_NAME", album_name);
+								DataCenter.setAlbumId(album_id);
+								DataCenter.setAlbumName(album_name);
 								i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 										| Intent.FLAG_ACTIVITY_NEW_TASK);
 								startActivity(i);
 								finish();
 							}
 						});
+				// alarm
+				Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+				player = new MediaPlayer();
+				try {
+					player.setDataSource(this, alert);
+				} catch (IllegalArgumentException e1) {
+					e1.printStackTrace();
+				} catch (SecurityException e1) {
+					e1.printStackTrace();
+				} catch (IllegalStateException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+				if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+					player.setAudioStreamType(AudioManager.STREAM_ALARM);
+					player.setLooping(true);
+					try {
+						player.prepare();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					player.start();
+				}
 				adb.show();
 			}
 			camera_flag = false; weight_flag = false;

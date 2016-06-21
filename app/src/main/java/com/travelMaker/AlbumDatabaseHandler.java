@@ -29,8 +29,7 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
     // Albums Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_PH_NO = "phone_number";
-    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PATH = "path";
     private static final String KEY_LIMIT = "maxWeight";
     private static final String KEY_WEIGHT = "currWeight";
     private final ArrayList<Album> album_list = new ArrayList<Album>();
@@ -48,8 +47,8 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ALBUMS_TABLE = "CREATE TABLE " + TABLE_ALBUMS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT," + KEY_EMAIL + " TEXT,"
-                + KEY_LIMIT + " TEXT," + KEY_WEIGHT + " TEXT" + ")";
+                + KEY_PATH + " TEXT," + KEY_LIMIT + " TEXT,"
+                + KEY_WEIGHT + " TEXT" + ")";
         db.execSQL(CREATE_ALBUMS_TABLE);
     }
 
@@ -72,10 +71,9 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, album.getName()); // Album Name
-        values.put(KEY_PH_NO, album.getPath()); // Album Phone
-        values.put(KEY_EMAIL, album.getPlane()); // Album Email
-        values.put(KEY_LIMIT, album.get_maxWeight()); // Album Email
-        values.put(KEY_WEIGHT, album.get_currWeight()); // Album Email
+        values.put(KEY_PATH, album.getPath()); // Album Path
+        values.put(KEY_LIMIT, album.get_maxWeight()); // Album Max Weight
+        values.put(KEY_WEIGHT, album.get_currWeight()); // Album Total Weight
         // Inserting Row
         db.insert(TABLE_ALBUMS, null, values);
         db.close(); // Closing database connection
@@ -86,13 +84,13 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_ALBUMS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PH_NO, KEY_EMAIL, KEY_LIMIT, KEY_WEIGHT }, KEY_ID + "=?",
+                        KEY_NAME, KEY_PATH, KEY_LIMIT, KEY_WEIGHT }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Album album = new Album(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return album
         cursor.close();
         db.close();
@@ -118,9 +116,8 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
                     album.setID(Integer.parseInt(cursor.getString(0)));
                     album.setName(cursor.getString(1));
                     album.setPath(cursor.getString(2));
-                    album.setPlane(cursor.getString(3));
-                    album.set_maxWeight(cursor.getString(4));
-                    album.set_currWeight(cursor.getString(5));
+                    album.set_maxWeight(cursor.getString(3));
+                    album.set_currWeight(cursor.getString(4));
                     // Adding album to list
                     album_list.add(album);
                 } while (cursor.moveToNext());
@@ -144,8 +141,7 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, album.getName());
-        values.put(KEY_PH_NO, album.getPath());
-        values.put(KEY_EMAIL, album.getPlane());
+        values.put(KEY_PATH, album.getPath());
         values.put(KEY_LIMIT, album.get_maxWeight());
         values.put(KEY_WEIGHT, album.get_currWeight());
 
@@ -160,8 +156,7 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, album.getName());
-        values.put(KEY_PH_NO, album.getPath());
-        values.put(KEY_EMAIL, album.getPlane());
+        values.put(KEY_PATH, album.getPath());
         values.put(KEY_LIMIT, album.get_maxWeight());
         values.put(KEY_WEIGHT, updateWeight);
         album.set_currWeight(Double.toString(updateWeight));

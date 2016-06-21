@@ -27,9 +27,9 @@ public class ProductShow extends TravelActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_show);
 
-        PRODUCT_ID = Integer.parseInt(getIntent().getStringExtra("PRODUCT_ID"));
-        album_id = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
-        album_name = getIntent().getStringExtra("ALBUM_NAME");
+        PRODUCT_ID = DataCenter.getProductId();
+        album_id = DataCenter.getAlbumId();
+        album_name = DataCenter.getAlbumName();
 
         db = new ProductDatabaseHandler(this);
 
@@ -58,8 +58,6 @@ public class ProductShow extends TravelActivity {
                 // TODO Auto-generated method stub
                 Intent product_show = new Intent(ProductShow.this,
                         ProductList.class);
-                product_show.putExtra("ALBUM_ID", Integer.toString(album_id));
-                product_show.putExtra("ALBUM_NAME", album_name);
 
                 startActivity(product_show);
 

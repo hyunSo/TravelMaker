@@ -49,8 +49,8 @@ public class ProductList extends TravelActivity {
             album_name_txt = (TextView) findViewById(R.id.product_album_name);
             album_weight_txt = (TextView) findViewById(R.id.textWeight);
 
-            ALBUM_ID = Integer.parseInt(getIntent().getStringExtra("ALBUM_ID"));
-            album_name = getIntent().getStringExtra("ALBUM_NAME");
+            ALBUM_ID = DataCenter.getAlbumId();
+            album_name = DataCenter.getAlbumName();
             c = AlbumdbHandler.Get_Album(ALBUM_ID);
 
             Log.e("ALBUM ID", Integer.toString(ALBUM_ID));
@@ -69,8 +69,6 @@ public class ProductList extends TravelActivity {
                 Intent add_user = new Intent(ProductList.this,
                         ArduinoControllerActivity.class);
                 add_user.putExtra("called", "add");
-                add_user.putExtra("ALBUM_ID", Integer.toString(ALBUM_ID));
-                add_user.putExtra("ALBUM_NAME", album_name);
 
                 add_user.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -203,9 +201,7 @@ public class ProductList extends TravelActivity {
 
                     Intent update_user = new Intent(activity,
                             ProductShow.class);
-                    update_user.putExtra("PRODUCT_ID", v.getTag().toString());
-                    update_user.putExtra("ALBUM_ID", Integer.toString(ALBUM_ID));
-                    update_user.putExtra("ALBUM_NAME", album_name);
+                    DataCenter.setProductId(Integer.parseInt(v.getTag().toString()));
 
                     activity.startActivity(update_user);
 
@@ -222,9 +218,7 @@ public class ProductList extends TravelActivity {
                     Intent update_user = new Intent(activity,
                             AddUpdateProduct.class);
                     update_user.putExtra("called", "update");
-                    update_user.putExtra("PRODUCT_ID", v.getTag().toString());
-                    update_user.putExtra("ALBUM_ID", Integer.toString(ALBUM_ID));
-                    update_user.putExtra("ALBUM_NAME", album_name);
+                    DataCenter.setProductId(Integer.parseInt(v.getTag().toString()));
 
                     activity.startActivity(update_user);
 

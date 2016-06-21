@@ -10,7 +10,7 @@ public class Album {
     public int _id;
     public String _name;
     public String _path;
-    public String _plane;
+    //public String _plane;
     public String _maxWeight;
     public String _currWeight;
 
@@ -18,39 +18,39 @@ public class Album {
     }
 
     // constructor
-    public Album(int id, String name, String _path, String _plane, String _maxWeight) {
+    public Album(int id, String name, String _path, String _maxWeight) {
         this._id = id;
         this._name = name;
         this._path = _path;
-        this._plane = _plane;
+        //this._plane = _plane;
         this._maxWeight = _maxWeight;
         this._currWeight = new String("0");
     }
 
     // constructor
-    public Album(String name, String _path, String _plane, String _maxWeight) {
+    public Album(String name, String _path, String _maxWeight) {
         this._name = name;
         this._path = _path;
-        this._plane = _plane;
+        //this._plane = _plane;
         this._maxWeight = _maxWeight;
         this._currWeight = new String("0");
     }
 
     // constructor
-    public Album(int id, String name, String _path, String _plane, String _maxWeight, String _currWeight) {
+    public Album(int id, String name, String _path, String _maxWeight, String _currWeight) {
         this._id = id;
         this._name = name;
         this._path = _path;
-        this._plane = _plane;
+        //this._plane = _plane;
         this._maxWeight = _maxWeight;
         this._currWeight = _currWeight;
     }
 
     // constructor
-    public Album(String name, String _path, String _plane, String _maxWeight, String _currWeight) {
+    public Album(String name, String _path, String _maxWeight, String _currWeight) {
         this._name = name;
         this._path = _path;
-        this._plane = _plane;
+        //this._plane = _plane;
         this._maxWeight = _maxWeight;
         this._currWeight = _currWeight;
     }
@@ -86,14 +86,14 @@ public class Album {
     }
 
     // getting plane
-    public String getPlane() {
+    /*public String getPlane() {
         return this._plane;
     }
 
     // setting plane
     public void setPlane(String plane) {
         this._plane = plane;
-    }
+    }*/
 
     public String get_maxWeight() {
         return _maxWeight;
