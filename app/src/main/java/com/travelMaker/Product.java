@@ -12,25 +12,28 @@ public class Product {
     public String _name;
     public String _path;
     public String _weight;
+    public int _priority;
 
     public Product() {
     }
 
     // constructor
-    public Product(int id, int _album_id, String name, String _path, String _weight) {
+    public Product(int id, int _album_id, String name, String _path, String _weight, int _priority) {
         this._id = id;
         this._album_id = _album_id;
         this._name = name;
         this._path = _path;
         this._weight = _weight;
+        this._priority = _priority;
     }
 
     // constructor
-    public Product(int _album_id, String name, String _path, String _weight) {
+    public Product(int _album_id, String name, String _path, String _weight, int _priority) {
         this._album_id = _album_id;
         this._name = name;
         this._path = _path;
         this._weight = _weight;
+        this._priority = _priority;
     }
 
     // getting ID
@@ -84,4 +87,11 @@ public class Product {
         this._weight = weight;
     }
 
+    public int get_priority() {
+        return _priority;
+    }
+
+    public void set_priority(int _priority) {
+        this._priority = _priority;
+    }
 }
