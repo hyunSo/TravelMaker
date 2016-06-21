@@ -19,6 +19,7 @@ public class ProductShow extends TravelActivity {
     Button go_back;
 
     String name, path, weight;
+    int priority;
 
     ProductDatabaseHandler db;
 
@@ -38,6 +39,7 @@ public class ProductShow extends TravelActivity {
         name = product.getName();
         path = product.getPath();
         weight = product.getWeight();
+        priority = product.get_priority();
 
         detail_text = (TextView)findViewById(R.id.product_detail);
         go_back = (Button)findViewById(R.id.product_back);
@@ -63,7 +65,6 @@ public class ProductShow extends TravelActivity {
 
             }
         });
-
 
     }
 

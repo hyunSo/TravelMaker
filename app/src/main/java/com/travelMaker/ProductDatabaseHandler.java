@@ -4,14 +4,14 @@ package com.travelMaker;
  * Created by yoon on 2016. 5. 29..
  */
 
-        import java.util.ArrayList;
-
         import android.content.ContentValues;
-        import android.content.Context;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
-        import android.util.Log;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class ProductDatabaseHandler extends SQLiteOpenHelper {
 
@@ -31,6 +31,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_PATH = "path";
     private static final String KEY_WEIGHT = "weight";
+    private static final String KEY_PRIORITY = "priority";
     private final ArrayList<Product> product_list = new ArrayList<Product>();
 
     public ProductDatabaseHandler(Context context) {
@@ -42,7 +43,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_ALBUM_ID + " INTEGER," + KEY_NAME + " TEXT,"
-                + KEY_PATH + " TEXT," + KEY_WEIGHT + " TEXT" + ")";
+                + KEY_PATH + " TEXT," + KEY_WEIGHT + " TEXT," + KEY_PRIORITY + " INTEGER" + ")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
     }
 
@@ -68,6 +69,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, product.getName()); // Product Name
         values.put(KEY_PATH, product.getPath()); // Product Phone
         values.put(KEY_WEIGHT, product.getWeight()); // Product Email
+        values.put(KEY_PRIORITY, product.get_priority()); // Product Email
         // Inserting Row
         db.insert(TABLE_PRODUCTS, null, values);
         db.close(); // Closing database connection
@@ -84,7 +86,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Product product = new Product(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)),
-                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                cursor.getString(2), cursor.getString(3), cursor.getString(4), Integer.parseInt(cursor.getString(5)));
         // return product
         cursor.close();
         db.close();
@@ -112,6 +114,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
                     product.setName(cursor.getString(2));
                     product.setPath(cursor.getString(3));
                     product.setWeight(cursor.getString(4));
+                    product.set_priority(Integer.parseInt(cursor.getString(5)));
                     // Adding product to list
                     product_list.add(product);
                 } while (cursor.moveToNext());
@@ -149,6 +152,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
                     product.setName(cursor.getString(2));
                     product.setPath(cursor.getString(3));
                     product.setWeight(cursor.getString(4));
+                    product.set_priority(Integer.parseInt(cursor.getString(5)));
                     // Adding product to list
                     product_list.add(product);
                 } while (cursor.moveToNext());
@@ -175,7 +179,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, product.getName());
         values.put(KEY_PATH, product.getPath());
         values.put(KEY_WEIGHT, product.getWeight());
-
+        values.put(KEY_WEIGHT, product.get_priority());
 
         // updating row
         return db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",
