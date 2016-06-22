@@ -231,7 +231,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				) {
 
 			dbHandler.Add_Product(new Product(album_id, name,
-					path, weight));
+					path, weight, 0));
 			AlbumdbHandler.Update_Album_Weight(c, weight);
 			dbHandler.close();
 			Toast_msg = "물품이 저장되었습니다";

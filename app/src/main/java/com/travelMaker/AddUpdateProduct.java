@@ -108,7 +108,7 @@ public class AddUpdateProduct extends TravelActivity {
                         && valid_weight.length() != 0) {
 
                     dbHandler.Add_Product(new Product(album_id, valid_name,
-                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight));
+                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight, 0));
                     Toast_msg = "Data inserted successfully";
                     Show_Toast(Toast_msg);
                     Reset_Text();
@@ -132,7 +132,7 @@ public class AddUpdateProduct extends TravelActivity {
                         && valid_weight.length() != 0) {
 
                     dbHandler.Update_Product(new Product(PRODUCT_ID, album_id, valid_name,
-                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight));
+                            "/TravelMaker/"+album_name+"/"+valid_name, valid_weight, 0));
                     dbHandler.close();
                     Toast_msg = "Data Update successfully";
                     Show_Toast(Toast_msg);
