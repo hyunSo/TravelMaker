@@ -38,4 +38,16 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/goto_howto"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33CCCC"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="\n사용 방법\n"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="#FFFFFF" />
 </LinearLayout>
