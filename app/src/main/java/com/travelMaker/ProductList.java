@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -251,7 +252,30 @@ public class ProductList extends TravelActivity {
 
                 bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
             }
-            resized = Bitmap.createScaledBitmap(bm, 320, 372, true);
+            resized = Bitmap.createScaledBitmap(bm, 420, 300, true);
+            if (resized != null) {
+                Matrix m = new Matrix();
+                m.setRotate(90);
+                try {
+                    Bitmap converted = Bitmap.createBitmap(resized, 0, 0,
+                            resized.getWidth(), resized.getHeight(), m, true);
+                    if (resized != converted) {
+                        resized = null;
+                        resized = converted;
+                        converted = null;
+                    }
+                } catch (OutOfMemoryError ex) {
+                    //              Toast.makeText(getApplicationContext(), "메모리부족", 0).show();
+                }
+            }
+            Bitmap srcBmp = resized;
+            if (srcBmp.getWidth() >= srcBmp.getHeight()){
+                resized = Bitmap.createBitmap(srcBmp, srcBmp.getWidth()/2 - srcBmp.getHeight()/2, 0,
+                        srcBmp.getHeight(), srcBmp.getHeight());
+            }else{
+                resized = Bitmap.createBitmap(srcBmp, 0, srcBmp.getHeight()/2 - srcBmp.getWidth()/2,
+                        srcBmp.getWidth(), srcBmp.getWidth());
+            }
             holder.image.setImageBitmap(resized);
 
             holder.show.setOnClickListener(new OnClickListener() {

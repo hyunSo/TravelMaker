@@ -3,6 +3,7 @@ package com.travelMaker;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +51,24 @@ public class ProductShow extends TravelActivity {
         bfo.inSampleSize = 2;
         ImageView iv = (ImageView)findViewById(R.id.product_image);
         Bitmap bm = BitmapFactory.decodeFile(path, bfo);
-        Bitmap resized = Bitmap.createScaledBitmap(bm, 320, 372, true);
+        Bitmap resized = Bitmap.createScaledBitmap(bm, 420, 300, true);
+
+        if (resized != null) {
+            Matrix m = new Matrix();
+            m.setRotate(90);
+            try {
+                Bitmap converted = Bitmap.createBitmap(resized, 0, 0,
+                        resized.getWidth(), resized.getHeight(), m, true);
+                if (resized != converted) {
+                    resized = null;
+                    resized = converted;
+                    converted = null;
+                }
+            } catch (OutOfMemoryError ex) {
+  //              Toast.makeText(getApplicationContext(), "메모리부족", 0).show();
+            }
+        }
+
         iv.setImageBitmap(resized);
 
         go_back.setOnClickListener(new View.OnClickListener() {
