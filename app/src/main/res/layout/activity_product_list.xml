@@ -67,6 +67,17 @@
             android:text="\n물품 추가\n"
             android:layout_marginLeft="5dp"
             android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/product_ex_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:background="#33CCCC"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="\n물품 빼기\n"
+            android:layout_marginLeft="5dp"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

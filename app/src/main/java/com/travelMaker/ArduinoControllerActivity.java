@@ -8,6 +8,7 @@ import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,6 +44,9 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	private Button mProductList;
 
 	private MediaPlayer player = null;
+
+	private SoundPool sound_pool;
+	private int sound_beep;
 
 	private View V;
 
@@ -104,6 +108,9 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		});
 
 		camera_flag = false; weight_flag = false;
+
+		// init signal sound
+		initSound();
 	}
 
 
@@ -196,12 +203,12 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				break;
 			case Constants.MSG_READ_DATA_COUNT:
 				String con = (String)msg.obj;
-				Show_Toast((String)msg.obj);
+				//Show_Toast((String)msg.obj);
 				//mTextLog.append(con + "\n");
-				if(con.charAt(0)!='a') { //사진촬영
+				if(con.charAt(0)=='1') { //사진촬영
 					readyCamera();
 				}
-				else { //무게와따
+				else if(con.charAt(0)=='a'){ //무게와따
 					con = con.substring(1);
 
 					weight = con;
@@ -234,8 +241,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 					path, weight, 0));
 			AlbumdbHandler.Update_Album_Weight(c, weight);
 			dbHandler.close();
-			Toast_msg = "물품이 저장되었습니다";
-			Show_Toast(Toast_msg);
+			//Toast_msg = "물품이 저장되었습니다";
+			//Show_Toast(Toast_msg);
 		}
 	}
 
@@ -264,9 +271,20 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
 	}
 
+	private void initSound()
+	{
+		sound_pool = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+		sound_beep = sound_pool.load( getApplicationContext(), R.raw.beep, 1 );
+	}
+
+	public void playSound()
+	{
+		sound_pool.play( sound_beep, 1f, 1f, 0, 0, 1f );
+	}
 
 
 	public void checkAndSave() {
+
 		if( camera_flag && weight_flag ) {
 			saveProduct();
 			if (Double.parseDouble(c.get_currWeight()) >= Double.parseDouble(c.get_maxWeight())){
@@ -406,6 +424,7 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		// Set Camera Flag
 		camera_flag = true;
 
+		playSound();
 		checkAndSave();
 		return;
 		}

@@ -109,9 +109,9 @@ public class AddUpdateProduct extends TravelActivity {
 
                     dbHandler.Add_Product(new Product(album_id, valid_name,
                             "/TravelMaker/"+album_name+"/"+valid_name, valid_weight, 0));
-                    Toast_msg = "Data inserted successfully";
-                    Show_Toast(Toast_msg);
-                    Reset_Text();
+                    //Toast_msg = "Data inserted successfully";
+                    //Show_Toast(Toast_msg);
+                    //Reset_Text();
 
                 }
 
@@ -134,12 +134,12 @@ public class AddUpdateProduct extends TravelActivity {
                     dbHandler.Update_Product(new Product(PRODUCT_ID, album_id, valid_name,
                             "/TravelMaker/"+album_name+"/"+valid_name, valid_weight, 0));
                     dbHandler.close();
-                    Toast_msg = "Data Update successfully";
-                    Show_Toast(Toast_msg);
-                    Reset_Text();
+                    //Toast_msg = "Data Update successfully";
+                    //Show_Toast(Toast_msg);
+                    //Reset_Text();
                 } else {
-                    Toast_msg = "Sorry Some Fields are missing.\nPlease Fill up all.";
-                    Show_Toast(Toast_msg);
+                    //Toast_msg = "Sorry Some Fields are missing.\nPlease Fill up all.";
+                    //Show_Toast(Toast_msg);
                 }
 
             }

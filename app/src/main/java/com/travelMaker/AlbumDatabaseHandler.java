@@ -154,12 +154,14 @@ public class AlbumDatabaseHandler extends SQLiteOpenHelper {
         double updateWeight = Double.parseDouble(album.get_currWeight()) + Double.parseDouble(weight);
         SQLiteDatabase db = this.getWritableDatabase();
 
+        String s_weight = String.format("%.4f", updateWeight);
+
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, album.getName());
         values.put(KEY_PATH, album.getPath());
         values.put(KEY_LIMIT, album.get_maxWeight());
-        values.put(KEY_WEIGHT, updateWeight);
-        album.set_currWeight(Double.toString(updateWeight));
+        values.put(KEY_WEIGHT, s_weight);
+        album.set_currWeight(s_weight);
 
         // updating row
         return db.update(TABLE_ALBUMS, values, KEY_ID + " = ?",

@@ -202,9 +202,9 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                     //TODO change 32 into exact value
                     dbHandler.Add_Album(new Album(valid_name,
                             "/TravelMaker/"+valid_name, valid_weight));
-                    Toast_msg = "Data inserted successfully"+valid_weight;
-                    Show_Toast(Toast_msg);
-                    Reset_Text();
+                    //Toast_msg = "Data inserted successfully"+valid_weight;
+                    //Show_Toast(Toast_msg);
+                    //Reset_Text();
 
                     Intent view_user = new Intent(AddUpdateAlbum.this,
                             AlbumList.class);
@@ -237,9 +237,9 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                     dbHandler.Update_Album(new Album(ALBUM_ID, valid_name,
                             "/TravelMaker/"+valid_name, valid_weight, currentWeight));
                     dbHandler.close();
-                    Toast_msg = "Data Updated successfully"+valid_weight;
-                    Show_Toast(Toast_msg);
-                    Reset_Text();
+                    //Toast_msg = "Data Updated successfully"+valid_weight;
+                    //Show_Toast(Toast_msg);
+                    //Reset_Text();
 
                     Intent view_user = new Intent(AddUpdateAlbum.this,
                             AlbumList.class);
@@ -248,8 +248,8 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
                     startActivity(view_user);
                     finish();
                 } else {
-                    Toast_msg = "Sorry Some Fields are missing.\nPlease Fill up all.";
-                    Show_Toast(Toast_msg);
+                    //Toast_msg = "Sorry Some Fields are missing.\nPlease Fill up all.";
+                    //Show_Toast(Toast_msg);
                 }
 
             }
