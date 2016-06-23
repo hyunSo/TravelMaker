@@ -227,12 +227,9 @@ public class ProductList extends TravelActivity {
 
                 row = inflater.inflate(layoutResourceId, parent, false);
                 holder = new UserHolder();
-                holder.name = (TextView) row.findViewById(R.id.product_name_txt);
                 holder.image = (ImageView)row.findViewById(R.id.product_list_image);
                 holder.weight = (TextView) row.findViewById(R.id.product_weight_txt);
-                holder.path = (TextView) row.findViewById(R.id.product_path_txt);
                 holder.show = (Button) row.findViewById(R.id.product_btn_show);
-                holder.edit = (Button) row.findViewById(R.id.product_btn_update);
                 holder.delete = (Button) row.findViewById(R.id.product_btn_delete);
                 row.setTag(holder);
             } else {
@@ -240,11 +237,8 @@ public class ProductList extends TravelActivity {
             }
             product = data.get(position);
             holder.show.setTag(product.getID());
-            holder.edit.setTag(product.getID());
             holder.delete.setTag(product.getID());
-            holder.name.setText(product.getName());
-            holder.weight.setText(product.getWeight());
-            holder.path.setText(product.getPath());
+            holder.weight.setText(product.getWeight() + "kg");
             BitmapFactory.Options bfo = new BitmapFactory.Options();
             bfo.inSampleSize = 2;
 
@@ -269,23 +263,6 @@ public class ProductList extends TravelActivity {
 
                     Intent update_user = new Intent(activity,
                             ProductShow.class);
-                    DataCenter.setProductId(Integer.parseInt(v.getTag().toString()));
-
-                    activity.startActivity(update_user);
-
-                }
-            });
-
-            holder.edit.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Log.i("Edit Button Clicked", "**********");
-
-                    Intent update_user = new Intent(activity,
-                            AddUpdateProduct.class);
-                    update_user.putExtra("called", "update");
                     DataCenter.setProductId(Integer.parseInt(v.getTag().toString()));
 
                     activity.startActivity(update_user);
@@ -354,11 +331,8 @@ public class ProductList extends TravelActivity {
 
         class UserHolder {
             ImageView image;
-            TextView name;
             TextView weight;
-            TextView path;
             Button show;
-            Button edit;
             Button delete;
         }
 

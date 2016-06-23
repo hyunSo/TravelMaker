@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.SurfaceHolder;
@@ -483,7 +482,7 @@ class MyCameraSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 		params.setPreviewSize(tmpSize.width, tmpSize.height);
 		params.setPictureSize(tmpSize.width, tmpSize.height);
-		params.setRotation(270);
+		//		params.setRotation(0);
 		// mCamera.setParameters(params);
 		mCamera.startPreview();
 	}

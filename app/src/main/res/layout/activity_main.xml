@@ -33,7 +33,7 @@
         android:background="#33CCCC"
         android:clickable="false"
         android:focusable="false"
-        android:text="\n설정 하기\n"
+        android:text="\n사용 설정\n"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"

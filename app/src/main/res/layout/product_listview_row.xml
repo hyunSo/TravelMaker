@@ -5,22 +5,25 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/name_id"
-        android:layout_width="wrap_content"
+        android:id="@+id/name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
+        android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:scaleType="fitStart"
             android:id="@+id/product_list_image" />
 
         <LinearLayout
@@ -30,31 +33,13 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/product_name_txt"
+                android:id="@+id/product_weight_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/product_path_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#999999" />
-
-            <TextView
-                android:id="@+id/product_weight_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#999999" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -70,15 +55,6 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:text="보기" />
-
-                <Button
-                    android:id="@+id/product_btn_update"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:text="수정" />
 
                 <Button
                     android:id="@+id/product_btn_delete"
