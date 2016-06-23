@@ -66,6 +66,7 @@
             android:focusable="false"
             android:text="\n물품 추가\n"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textColor="#FFFFFF" />
         <Button
             android:id="@+id/product_ex_btn"
