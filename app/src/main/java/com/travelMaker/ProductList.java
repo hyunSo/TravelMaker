@@ -16,6 +16,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -132,6 +135,8 @@ public class ProductList extends TravelActivity {
 
     private void product_highlight(int[] ex_productIdx) {
 
+        productarr.clear();
+
         for(int i = 0;i<ex_productIdx.length;i++) {
             Product tmp = product_data.get(ex_productIdx[i]);
             productarr.add(tmp);
@@ -166,12 +171,14 @@ public class ProductList extends TravelActivity {
             String name = product_array_from_db.get(i).getName();
             String path = product_array_from_db.get(i).getPath();
             String weight = product_array_from_db.get(i).getWeight();
+            int priority = product_array_from_db.get(i).get_priority();
             Product cnt = new Product();
             cnt.setID(tidno);
             cnt.setAlbumID(album_id);
             cnt.setName(name);
             cnt.setPath(path);
             cnt.setWeight(weight);
+            cnt.set_priority(priority);
 
             product_data.add(cnt);
         }
@@ -230,6 +237,7 @@ public class ProductList extends TravelActivity {
                 holder = new UserHolder();
                 holder.image = (ImageView)row.findViewById(R.id.product_list_image);
                 holder.weight = (TextView) row.findViewById(R.id.product_weight_txt);
+                holder.priority = (CheckBox) row.findViewById(R.id.priority);
                 holder.show = (Button) row.findViewById(R.id.product_btn_show);
                 holder.delete = (Button) row.findViewById(R.id.product_btn_delete);
                 row.setTag(holder);
@@ -240,6 +248,10 @@ public class ProductList extends TravelActivity {
             holder.show.setTag(product.getID());
             holder.delete.setTag(product.getID());
             holder.weight.setText(product.getWeight() + "kg");
+            boolean prior = false;
+            if( product.get_priority() == 1 ) prior = true;
+            holder.priority.setTag(product.getID());
+            holder.priority.setChecked(prior);
             BitmapFactory.Options bfo = new BitmapFactory.Options();
             bfo.inSampleSize = 2;
 
@@ -319,11 +331,7 @@ public class ProductList extends TravelActivity {
                                     AlbumdbHandler.Update_Album_Weight(c, "-" + tmp.getWeight());
                                     AlbumdbHandler.close();
 
-                                    Log.e("DELETE", "productArr size: " + Integer.toString(productarr.size()));
-                                    Log.e("DELETE", "productData index: " + Integer.toString(findIndex(product_data, user_id)));
-
-                                    if( findIndex(product_data, user_id) < productarr.size())
-                                    {
+                                    if (findIndex(product_data, user_id) < productarr.size()) {
                                         productarr.remove(findIndex(productarr, user_id));
                                     }
                                     dBHandler.Delete_Product(user_id);
@@ -344,11 +352,30 @@ public class ProductList extends TravelActivity {
                 }
 
             });
+
             if (position < productarr.size()) {
                 row.setBackgroundColor(Color.parseColor("#BCF7F0"));
             } else {
                 row.setBackgroundColor(Color.parseColor("#ffffff"));
             }
+
+            holder.priority.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView,
+                                             boolean isChecked) {
+                    if (buttonView.getId() == R.id.priority) {
+                        int pd_id = Integer.parseInt(buttonView.getTag().toString());
+                        Product tmp = dbHandler.Get_Product(pd_id);
+                        int pr = 0;
+                        if (isChecked) pr = 1;
+                        dbHandler.updatePriority(tmp, pr);
+
+                        product_data.get(findIndex(product_data, tmp.getID())).set_priority(pr);
+                        product_array_from_db.get(findIndex(product_array_from_db, tmp.getID())).set_priority(pr);
+                    }
+                }
+            });
             return row;
 
         }
@@ -358,6 +385,7 @@ public class ProductList extends TravelActivity {
             TextView weight;
             Button show;
             Button delete;
+            CheckBox priority;
         }
 
         private int findIndex(ArrayList<Product> arr, int id) {

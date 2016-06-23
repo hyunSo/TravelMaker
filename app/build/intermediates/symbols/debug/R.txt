@@ -32,6 +32,7 @@ int id lv1 0x7f0a0004
 int id name 0x7f0a0030
 int id planeDetail_tv 0x7f0a002f
 int id previewFrame 0x7f0a0015
+int id priority 0x7f0a0033
 int id product_add_btn 0x7f0a0021
 int id product_add_name 0x7f0a000b
 int id product_add_save_btn 0x7f0a000e
@@ -41,8 +42,8 @@ int id product_add_weight 0x7f0a000c
 int id product_album_name 0x7f0a001f
 int id product_back 0x7f0a0026
 int id product_btn 0x7f0a0018
-int id product_btn_delete 0x7f0a0034
-int id product_btn_show 0x7f0a0033
+int id product_btn_delete 0x7f0a0035
+int id product_btn_show 0x7f0a0034
 int id product_detail 0x7f0a0024
 int id product_ex_btn 0x7f0a0022
 int id product_goto_album_list 0x7f0a0020

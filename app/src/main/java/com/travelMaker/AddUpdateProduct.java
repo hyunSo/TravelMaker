@@ -117,7 +117,7 @@ public class AddUpdateProduct extends TravelActivity {
 
             }
         });
-
+/*
         update_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -158,7 +158,7 @@ public class AddUpdateProduct extends TravelActivity {
                 finish();
             }
         });
-
+*/
         add_view_all.setOnClickListener(new View.OnClickListener() {
 
             @Override

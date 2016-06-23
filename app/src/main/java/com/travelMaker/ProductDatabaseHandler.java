@@ -179,7 +179,23 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, product.getName());
         values.put(KEY_PATH, product.getPath());
         values.put(KEY_WEIGHT, product.getWeight());
-        values.put(KEY_WEIGHT, product.get_priority());
+        values.put(KEY_PRIORITY, product.get_priority());
+
+        // updating row
+        return db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(product.getID()) });
+    }
+
+    public int updatePriority(Product product, int priority) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ALBUM_ID, product.getAlbumID());
+        values.put(KEY_NAME, product.getName());
+        values.put(KEY_PATH, product.getPath());
+        values.put(KEY_WEIGHT, product.getWeight());
+        values.put(KEY_PRIORITY, priority);
+        product.set_priority(priority);
 
         // updating row
         return db.update(TABLE_PRODUCTS, values, KEY_ID + " = ?",

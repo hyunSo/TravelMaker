@@ -137,9 +137,10 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 				weight_flag = true;
 				camera_flag = true;
 				weight = new String("3.33");
-				name = new String("tempName");
-				path = new String("tempPath");
-				checkAndSave();
+//				name = new String("tempName");
+//				path = new String("tempPath");
+				readyCamera();
+//				checkAndSave();
 				break;
 			case R.id.product_btn:
 				Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);

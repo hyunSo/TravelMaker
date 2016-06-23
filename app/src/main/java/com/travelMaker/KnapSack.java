@@ -1,5 +1,7 @@
 package com.travelMaker;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -25,7 +27,7 @@ public class KnapSack {
 
         for(int i = 0;i<n;i++)
         {
-            vi[i] = tmpval;
+            vi[i] = products.get(i).get_priority();
             wi[i] = (int) (Double.parseDouble(products.get(i).getWeight())*pointmod);
         }
         // V[i, capacity w] will store the maximum combined value of any subset of items {0,1,...,i} of combined size at most w.
