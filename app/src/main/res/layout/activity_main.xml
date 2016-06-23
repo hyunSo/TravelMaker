@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:layout_marginTop="75dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter"
+        android:background="@drawable/main_img" />
+    <Button
+        android:id="@+id/goto_album_list"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33CCCC"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="\n앨범 보기\n"
+        android:layout_marginBottom="5dp"
+
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp" />
+    <Button
+        android:id="@+id/goto_setting"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#33CCCC"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="\n설정 하기\n"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="#FFFFFF" />
+</LinearLayout>
