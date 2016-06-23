@@ -25,7 +25,7 @@ import android.widget.constants;
 
 import java.util.ArrayList;
 
-public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItemSelectedListener{
+public class AddUpdateAlbum extends TravelActivity{
     EditText add_name;//, add_plane;
     Spinner add_flight;
     Button add_save_btn, add_view_all, update_btn, update_view_all;
@@ -35,7 +35,8 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
     String valid_weight = "";
     int ALBUM_ID;
     int flight_id = -1;
-    ArrayList<plane> plane_data1,plane_data2, plane_data3;
+    int lv_start = -1;
+    ArrayList<plane> plane_data1;
     plane_Adapter cAdapter;
     AlbumDatabaseHandler dbHandler = new AlbumDatabaseHandler(this);
 
@@ -43,8 +44,6 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
     TextView vs_reverseProgress=null;
 
     ListView planeListView1;
-    ListView planeListView2;
-    ListView planeListView3;
 
 
     @Override
@@ -56,12 +55,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
         final int max = 40;
         final int min = 10;
 
-        verticalSeekBar_Reverse=(VerticalSeekBar_Reverse)findViewById(R.id.seekbar_reverse);
-        vs_reverseProgress=(TextView)findViewById(R.id.reverse_sb_progresstext);
         planeListView1 = (ListView) findViewById(R.id.lv1);
-        planeListView2 = (ListView) findViewById(R.id.lv2);
-        planeListView3 = (ListView) findViewById(R.id.lv3);
-        add_flight = (Spinner) findViewById(R.id.album_add_flight);
 
         // set screen
         Set_Add_Update_Screen();
@@ -94,85 +88,9 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         add_flight.setAdapter(adapter);
-        add_flight.setOnItemSelectedListener(this);
+        add_flight.setOnItemSelectedListener(new MyOnItemSelectedListener());
+        createSpinnerDropDown();
 
-/*      add_plane.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Is_Valid_Email(add_plane);
-            }
-        });
-*/
-
-        //ArrayAdapter<String> sAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, constants.PLANES);
-
-        plane_data1 = new ArrayList<plane>();
-        plane_data2 = new ArrayList<plane>();
-        plane_data3 = new ArrayList<plane>();
-        for(int i = 0;i< constants.PLANES.length;i++) {
-            plane p = new plane();
-            p._details = constants.PLANES[i];
-            if(i<8) plane_data1.add(p);
-            else if(i<14) plane_data2.add(p);
-            else plane_data3.add(p);
-        }
-        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data1);
-        planeListView1.setAdapter(cAdapter);
-        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data2);
-        planeListView2.setAdapter(cAdapter);
-        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data3);
-        planeListView3.setAdapter(cAdapter);
-
-        cAdapter.notifyDataSetChanged();
-
-        //   verticalSeekBar_Reverse.setMax( (max - min) / step );
-        verticalSeekBar_Reverse.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                double value = min + (progress*(max-min)/100);
-                vs_reverseProgress.setText(value+" kg");
-                valid_weight = Double.toString(value);
-                int c1, c2, c3;
-                if(value<16) {
-                    c1 = Color.WHITE;
-                    c2 = c3 = Color.GRAY;
-                }
-                else if(value<30)
-                {
-                    c2 = Color.WHITE;
-                    c1 = c3 = Color.GRAY;
-                }
-                else
-                {
-                    c3 = Color.WHITE;
-                    c1 = c2 = Color.GRAY;
-                }
-                planeListView1.setBackgroundColor(c1);
-                planeListView2.setBackgroundColor(c2);
-                planeListView3.setBackgroundColor(c3);
-
-            }
-        });
 
 
         add_name.addTextChangedListener(new TextWatcher() {
@@ -283,63 +201,55 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
         });
 
     }
+    private void createSpinnerDropDown(){
+        Spinner spinner = (Spinner) findViewById(R.id.album_add_subflight);
+        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, constants.subdaehan);
+        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(myAdapter2);
+        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
 
-    public  void  onItemSelected(
-            AdapterView<?> parent, View view, int  position, long  id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        //
-        flight_id = position;
-        /*switch (position) {
-            case 0:
-                valid_plane = null;
-                break;
-            case 1:
-                valid_plane = new String("아시아나항공");
-                Toast.makeText(parent.getContext(), "아시아나항공", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                valid_plane = new String("대한항공");
-                Toast.makeText(parent.getContext(), "대한항공", Toast.LENGTH_SHORT).show();
-                break;
-            case 3:
-                valid_plane = new String("제주항공");
-                Toast.makeText(parent.getContext(), "제주항공", Toast.LENGTH_SHORT).show();
-                break;
-            case 4:
-                valid_plane = new String("진에어");
-                Toast.makeText(parent.getContext(), "진에어", Toast.LENGTH_SHORT).show();
-                break;
-            case 5:
-                valid_plane = new String("이스타항공");
-                Toast.makeText(parent.getContext(), "이스타항공", Toast.LENGTH_SHORT).show();
-                break;
-            case 6:
-                valid_plane = new String("티웨이");
-                Toast.makeText(parent.getContext(), "티웨이", Toast.LENGTH_SHORT).show();
-                break;
-            case 7:
-                valid_plane = new String("에어부산");
-                Toast.makeText(parent.getContext(), "에어부산", Toast.LENGTH_SHORT).show();
-                break;
-            case 8:
-                valid_plane = new String("에어아시아");
-                Toast.makeText(parent.getContext(), "에어아시아", Toast.LENGTH_SHORT).show();
-                break;
-            case 9:
-                valid_plane = new String("델타항공");
-                Toast.makeText(parent.getContext(), "델타항공", Toast.LENGTH_SHORT).show();
-                break;
-            case 10:
-                valid_plane = new String("피치항공");
-                Toast.makeText(parent.getContext(), "피치항공", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                valid_plane = null;
-                flight_id = -1;
-                Toast.makeText(parent.getContext(), "Something is wrong", Toast.LENGTH_SHORT).show();
-                break;
-        }*/
+    }
+
+    private void sub_flight(int position, long id) {
+        plane_data1 = new ArrayList<plane>();
+        //plane_data2 = new ArrayList<plane>();
+        //plane_data3 = new ArrayList<plane>();
+
+        switch (flight_id) {
+            case 1://아시아나
+            case 2://대한항공
+                if(position>0) {
+                    lv_start =  constants.SUBDAEHAN_STPOINT[position - 1];
+                    for (int i = constants.SUBDAEHAN_STPOINT[position - 1]; i < constants.SUBDAEHAN_STPOINT[position]; i++) {
+                        plane p = new plane();
+                        p._details = constants.SUBDAEHAN[i];
+                        plane_data1.add(p);
+                    }
+                }
+
+        }
+        cAdapter = new plane_Adapter(this, R.layout.plane_listview_row, plane_data1);
+        planeListView1.setAdapter(cAdapter);
+        planeListView1.setOnItemClickListener( new ListViewItemClickListener());
+        cAdapter.notifyDataSetChanged();
+
+
+    }
+    private class ListViewItemClickListener implements AdapterView.OnItemClickListener
+    {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+
+            valid_weight = Integer.toString(constants.SUBDAEHAN_W[lv_start+position]);
+
+            for(int i=0;i<parent.getCount();i++)
+                if(i!=position) parent.getChildAt(i).setBackgroundColor(Color.WHITE);
+            view.setBackgroundColor(Color.GRAY);
+
+
+
+        }
     }
 
     public  void  onNothingSelected(AdapterView<?> parent) {
@@ -384,7 +294,7 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
 
     public void Reset_Text() {
         add_name.getText().clear();
- //       add_plane.getText().clear();
+        //       add_plane.getText().clear();
     }
 
     public class plane_Adapter extends ArrayAdapter<plane> {
@@ -439,6 +349,44 @@ public class AddUpdateAlbum extends TravelActivity implements AdapterView.OnItem
 
             return row;
 
+        }
+    }
+    public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            String selectedItem = parent.getItemAtPosition(pos).toString();
+
+            //check which spinner triggered the listener
+            switch (parent.getId()) {
+                //country spinner
+                case R.id.album_add_flight:
+                    flight_id = pos;
+                    //make sure the country was already selected during the onCreate
+               /*     if(selectedCountry != null){
+                        Toast.makeText(parent.getContext(), "Country you selected is " + selectedItem,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    selectedCountry = selectedItem;*/
+                    break;
+                //animal spinner
+                case R.id.album_add_subflight:
+                    sub_flight(pos, id);
+                    //make sure the animal was already selected during the onCreate
+               /*     if(selectedAnimal != null){
+                        Toast.makeText(parent.getContext(), "Animal selected is " + selectedItem,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    selectedAnimal = selectedItem;*/
+
+                    break;
+            }
+
+
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do nothing.
         }
     }
 }
