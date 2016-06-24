@@ -15,23 +15,30 @@
 	<LinearLayout
         android:id="@+id/album_layout"
         android:layout_width="fill_parent"
-        android:layout_height="50dip"
+        android:layout_height="100dip"
         android:orientation="horizontal"
         >
 
 		<Button
 			android:id="@+id/product_btn"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="50dp"
 			android:textSize="14sp"
-			android:text="돌아가기" />
+			android:text="돌아가기"
+            android:background="#33CCCC"
+            android:clickable="false"
+            android:focusable="false"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="20dp"
+
+            android:textColor="#FFFFFF"/>
 
 	</LinearLayout>
 
-	<Button
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="TEMP"
-android:id="@+id/button" />
+	<!--<Button-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="TEMP"-->
+<!--android:id="@+id/button" />-->
 
 </LinearLayout>

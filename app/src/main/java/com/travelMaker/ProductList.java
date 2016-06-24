@@ -102,8 +102,8 @@ public class ProductList extends TravelActivity {
                 // TODO Auto-generated method stub
                 // arraylist<producst> = knapsack();
                 int max_weight = (int)Double.parseDouble(c.get_maxWeight());
-                if(product_array_from_db.size()>0) {
-                    KnapSack kn = new KnapSack(product_array_from_db, max_weight);
+                if(product_data.size()>0) {
+                    KnapSack kn = new KnapSack(product_data, max_weight);
                     int[] ex_productIdx = kn.getExProductListIdx();
                     product_highlight(ex_productIdx);
                 }
@@ -388,15 +388,16 @@ public class ProductList extends TravelActivity {
             CheckBox priority;
         }
 
-        private int findIndex(ArrayList<Product> arr, int id) {
-            int i;
 
-            for(i = 0;i<arr.size();i++) {
-                if( arr.get(i).getID() == id ) break;
-            }
-            return i;
-        }
 
     }
 
+    public int findIndex(ArrayList<Product> arr, int id) {
+        int i;
+
+        for(i = 0;i<arr.size();i++) {
+            if( arr.get(i).getID() == id ) break;
+        }
+        return i;
+    }
 }

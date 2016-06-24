@@ -87,8 +87,8 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 		album_name = DataCenter.getAlbumName();
 		c = AlbumdbHandler.Get_Album(album_id);
 
-		temp = (Button) findViewById(R.id.button);
-		temp.setOnClickListener(this);
+		//temp = (Button) findViewById(R.id.button);
+		//temp.setOnClickListener(this);
 
 		// Initialize
 		mListener = new SerialListener();
@@ -133,15 +133,15 @@ public class ArduinoControllerActivity extends TravelActivity implements View.On
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
-			case R.id.button:
-				weight_flag = true;
-				camera_flag = true;
-				weight = new String("3.33");
-//				name = new String("tempName");
-//				path = new String("tempPath");
-				readyCamera();
-//				checkAndSave();
-				break;
+//			case R.id.button:
+//				weight_flag = true;
+//				camera_flag = true;
+//				weight = new String("3.33");
+////				name = new String("tempName");
+////				path = new String("tempPath");
+//				readyCamera();
+////				checkAndSave();
+//				break;
 			case R.id.product_btn:
 				Intent i = new Intent(ArduinoControllerActivity.this, ProductList.class);
 				DataCenter.setAlbumId(album_id);

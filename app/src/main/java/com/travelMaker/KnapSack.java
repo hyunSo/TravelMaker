@@ -20,6 +20,7 @@ public class KnapSack {
         int n = products.size();
         int[] vi=new int[n];
         int[] wi=new int[n];
+        int[] val_tmp = {1, 100};
         // set capacity
         double pointmod = Math.pow(10,pointlimit);
         int W = (int) (maxweight*pointmod);
@@ -27,7 +28,7 @@ public class KnapSack {
 
         for(int i = 0;i<n;i++)
         {
-            vi[i] = products.get(i).get_priority();
+            vi[i] = val_tmp[products.get(i).get_priority()];
             wi[i] = (int) (Double.parseDouble(products.get(i).getWeight())*pointmod);
         }
         // V[i, capacity w] will store the maximum combined value of any subset of items {0,1,...,i} of combined size at most w.
